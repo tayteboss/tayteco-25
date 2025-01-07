@@ -1,54 +1,62 @@
-import styled from 'styled-components';
-import { NextSeo } from 'next-seo';
+import styled from "styled-components";
+import { NextSeo } from "next-seo";
 import {
-	HomePageType,
-	SiteSettingsType,
-	TransitionsType
-} from '../shared/types/types';
-import { motion } from 'framer-motion';
-import client from '../client';
+  ProjectType,
+  SiteSettingsType,
+  TransitionsType,
+} from "../shared/types/types";
+import { motion } from "framer-motion";
+import client from "../client";
 import {
-	homePageQueryString,
-	siteSettingsQueryString
-} from '../lib/sanityQueries';
+  projectsQueryString,
+  siteSettingsQueryString,
+} from "../lib/sanityQueries";
+import Clock from "../components/blocks/Clock";
+import Information from "../components/blocks/Information";
+import Projects from "../components/blocks/Projects";
 
 const PageWrapper = styled(motion.div)``;
 
 type Props = {
-	data: HomePageType;
-	siteSettings: SiteSettingsType;
-	pageTransitionVariants: TransitionsType;
+  projects: ProjectType[];
+  siteSettings: SiteSettingsType;
+  pageTransitionVariants: TransitionsType;
 };
 
 const Page = (props: Props) => {
-	const { data, siteSettings, pageTransitionVariants } = props;
+  const { projects, siteSettings, pageTransitionVariants } = props;
 
-	return (
-		<PageWrapper
-			variants={pageTransitionVariants}
-			initial="hidden"
-			animate="visible"
-			exit="hidden"
-		>
-			<NextSeo
-				title={data?.seoTitle || ''}
-				description={data?.seoDescription || ''}
-			/>
-			Home
-		</PageWrapper>
-	);
+  console.log("projects", projects);
+  console.log("siteSettings", siteSettings);
+
+  return (
+    <PageWrapper
+      variants={pageTransitionVariants}
+      initial="hidden"
+      animate="visible"
+      exit="hidden"
+    >
+      <NextSeo
+        title="Tayte.co — Minimal intervention design & development"
+        description={siteSettings?.info || ""}
+      />
+      <Clock />
+      <Projects />
+      <Information />
+    </PageWrapper>
+  );
 };
 
 export async function getStaticProps() {
-	// const siteSettings = await client.fetch(siteSettingsQueryString);
-	// const data = await client.fetch(homePageQueryString);
-	const data = false;
+  const siteSettings = await client.fetch(siteSettingsQueryString);
+  const projects = await client.fetch(projectsQueryString);
 
-	return {
-		props: {
-			data
-		}
-	};
+  return {
+    props: {
+      siteSettings,
+      projects,
+    },
+  };
 }
 
 export default Page;
