@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
+import pxToRem from "../../../utils/pxToRem";
 
 const HOVER_SPACING = 14; // Adjust to your liking
 
@@ -15,6 +16,7 @@ const ClockWrapper = styled.section<{ hovered: boolean }>`
   margin: 0 auto;
   height: 460px;
   width: 460px;
+  margin-bottom: ${pxToRem(24)};
 `;
 
 interface HandContainerProps {

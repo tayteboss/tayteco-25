@@ -5,8 +5,11 @@ import LayoutGrid from "../../layout/LayoutGrid";
 import DesktopProjectCard from "../DesktopProjectCard";
 import MobileProjectCard from "../MobileProjectCard";
 import { useState } from "react";
+import pxToRem from "../../../utils/pxToRem";
 
-const ProjectsWrapper = styled.section``;
+const ProjectsWrapper = styled.section`
+  margin-bottom: ${pxToRem(8)};
+`;
 
 type Props = {
   data: ProjectType[];
@@ -21,7 +24,7 @@ const Projects = (props: Props) => {
     <ProjectsWrapper>
       <LayoutWrapper>
         <LayoutGrid>
-          <DesktopProjectCard data={data} />
+          <DesktopProjectCard data={activeProject} />
           <MobileProjectCard data={activeProject} />
         </LayoutGrid>
       </LayoutWrapper>
