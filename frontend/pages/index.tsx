@@ -41,7 +41,7 @@ const Page = (props: Props) => {
         description={siteSettings?.info || ""}
       />
       <Clock />
-      <Projects />
+      <Projects data={projects} />
       <Information />
     </PageWrapper>
   );
