@@ -9,6 +9,9 @@ import pxToRem from "../../../utils/pxToRem";
 
 const ProjectsWrapper = styled.section`
   margin-bottom: ${pxToRem(8)};
+  position: sticky;
+  top: ${pxToRem(8)};
+  z-index: 2;
 `;
 
 type Props = {

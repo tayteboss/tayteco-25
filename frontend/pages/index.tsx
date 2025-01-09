@@ -42,7 +42,7 @@ const Page = (props: Props) => {
       />
       <Clock />
       <Projects data={projects} />
-      <Information />
+      <Information siteSettings={siteSettings} />
     </PageWrapper>
   );
 };

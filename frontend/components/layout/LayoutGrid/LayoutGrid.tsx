@@ -9,7 +9,7 @@ type Props = {
 const Grid = styled.div`
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-column-gap: ${pxToRem(2)};
+  grid-column-gap: ${pxToRem(1)};
   align-items: start;
 
   @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {

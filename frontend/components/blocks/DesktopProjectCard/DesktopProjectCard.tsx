@@ -69,6 +69,25 @@ const Button = styled.a`
   text-decoration: none;
   border-radius: 2px;
   gap: ${pxToRem(6)};
+
+  transition: all var(--transition-speed-default) var(--transition-ease);
+
+  &:hover {
+    background: rgba(255, 255, 255, 1);
+    color: var(--colour-black);
+
+    svg {
+      path {
+        stroke: var(--colour-black);
+      }
+    }
+  }
+
+  svg {
+    path {
+      transition: all var(--transition-speed-default) var(--transition-ease);
+    }
+  }
 `;
 
 const NotchWrapper = styled.div`

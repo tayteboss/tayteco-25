@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import styled from "styled-components";
 import pxToRem from "../../../utils/pxToRem";
+import { motion, useScroll, useTransform } from "framer-motion";
+import router from "next/router";
 
 const HOVER_SPACING = 14; // Adjust to your liking
 
@@ -8,7 +10,7 @@ interface ClockProps {
   // If you need extra props, add here
 }
 
-const ClockWrapper = styled.section<{ hovered: boolean }>`
+const ClockWrapper = styled(motion.section)<{ hovered: boolean }>`
   display: flex;
   justify-content: center;
   align-items: center;
@@ -171,11 +173,20 @@ const Clock: React.FC<ClockProps> = () => {
   // So after each full circle, angle keeps incrementing
   const secondRotation = secondLoopCount * 360 + seconds * 6; // can grow beyond 360
 
+  const { scrollY } = useScroll();
+
+  const blur = useTransform(scrollY, [0, 700], ["blur(0px)", "blur(20px)"]);
+
+  const transform = useTransform(
+    scrollY,
+    [0, 700],
+    ["translateY(0px)", "translateY(400px)"]
+  );
+
   return (
     <ClockWrapper
       hovered={hovered}
-      onMouseEnter={() => setHovered(true)}
-      onMouseLeave={() => setHovered(false)}
+      style={{ filter: blur, transform: transform }}
     >
       {/* Hour hand on top (z-index = 3) */}
       <HandWithLabel
