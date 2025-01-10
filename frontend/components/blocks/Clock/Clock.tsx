@@ -69,13 +69,9 @@ interface LabelProps {
   isSecondHand?: boolean;
 }
 
-const HandLabel: React.FC<LabelProps> = ({
-  rotation,
-  label,
-  isSecondHand = false,
-}) => {
+const HandLabel: React.FC<LabelProps> = ({ rotation, label }) => {
   const flipAngle = rotation % 360;
-  const flip = flipAngle > 180 && !isSecondHand; // don't flip if isSecondHand
+  const flip = flipAngle > 180;
   const transformValue = flip ? "rotate(180deg)" : "none";
 
   let link: string | undefined;
@@ -111,6 +107,18 @@ const HandLabel: React.FC<LabelProps> = ({
 
   return <LabelWrapper>{content}</LabelWrapper>;
 };
+const SecondHandLabel: React.FC<LabelProps> = ({ rotation, label }) => {
+  const LabelWrapper = styled.div`
+    transform-origin: center center;
+    text-align: "left";
+
+    @media ${(props) => props.theme.mediaBreakpoints.mobile} {
+      font-size: 10px;
+    }
+  `;
+
+  return <LabelWrapper>{label}</LabelWrapper>;
+};
 
 interface HandWithLabelProps {
   rotation: number; // 0°..∞ for second hand, 0°..360 for hour/min
@@ -140,11 +148,20 @@ const HandWithLabel: React.FC<HandWithLabelProps> = ({
       $isSecondHand={isSecondHand}
       $show={show}
     >
-      <HandLabel
-        rotation={rotation}
-        label={label}
-        isSecondHand={isSecondHand}
-      />
+      {!isSecondHand && (
+        <HandLabel
+          rotation={rotation}
+          label={label}
+          isSecondHand={isSecondHand}
+        />
+      )}
+      {isSecondHand && (
+        <SecondHandLabel
+          rotation={rotation}
+          label={label}
+          isSecondHand={isSecondHand}
+        />
+      )}
     </HandContainer>
   );
 };
@@ -251,7 +268,7 @@ const Clock: React.FC<ClockProps> = () => {
             ? "minimal intervention design/dev"
             : "minimal intervention design & development"
         }
-        isSecondHand
+        isSecondHand={true}
         offsetY={HOVER_SPACING}
         zIndex={1}
         transitionDuration={secondSpeedToSlow ? "1s" : "0.1s"} // slightly longer to see the smooth movement
