@@ -4,15 +4,8 @@ import LayoutWrapper from "../../layout/LayoutWrapper";
 import LayoutGrid from "../../layout/LayoutGrid";
 import DesktopProjectCard from "../DesktopProjectCard";
 import MobileProjectCard from "../MobileProjectCard";
-import { useState } from "react";
-import pxToRem from "../../../utils/pxToRem";
-
-const ProjectsWrapper = styled.section`
-  margin-bottom: ${pxToRem(8)};
-  position: sticky;
-  top: ${pxToRem(8)};
-  z-index: 2;
-`;
+import { useEffect, useState } from "react";
+import ProjectsLayout from "../../layout/ProjectsLayout";
 
 type Props = {
   data: ProjectType[];
@@ -21,17 +14,25 @@ type Props = {
 const Projects = (props: Props) => {
   const { data } = props;
 
-  const [activeProject, setActiveProject] = useState(data[0]);
+  const [isReady, setIsReady] = useState(false);
+
+  useEffect(() => {
+    setTimeout(() => setIsReady(true), 1000);
+  }, []);
 
   return (
-    <ProjectsWrapper>
-      <LayoutWrapper>
-        <LayoutGrid>
-          <DesktopProjectCard data={activeProject} />
-          <MobileProjectCard data={activeProject} />
-        </LayoutGrid>
-      </LayoutWrapper>
-    </ProjectsWrapper>
+    <>
+      {data.map((project, i) => (
+        <ProjectsLayout key={i} isReady={isReady}>
+          <LayoutWrapper>
+            <LayoutGrid>
+              <DesktopProjectCard data={project} />
+              <MobileProjectCard data={project} />
+            </LayoutGrid>
+          </LayoutWrapper>
+        </ProjectsLayout>
+      ))}
+    </>
   );
 };
 

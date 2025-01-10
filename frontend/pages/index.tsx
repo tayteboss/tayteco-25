@@ -26,9 +26,6 @@ type Props = {
 const Page = (props: Props) => {
   const { projects, siteSettings, pageTransitionVariants } = props;
 
-  console.log("projects", projects);
-  console.log("siteSettings", siteSettings);
-
   return (
     <PageWrapper
       variants={pageTransitionVariants}
@@ -41,8 +38,9 @@ const Page = (props: Props) => {
         description={siteSettings?.info || ""}
       />
       <Clock />
-      <Projects data={projects} />
+      <Projects data={projects.slice(0, 1)} />
       <Information siteSettings={siteSettings} />
+      <Projects data={projects.slice(1)} />
     </PageWrapper>
   );
 };

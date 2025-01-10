@@ -3,18 +3,19 @@ import { ProjectType } from "../../../shared/types/types";
 import MuxPlayer from "@mux/mux-player-react/lazy";
 import NotchIcon from "../../svgs/NotchIcon";
 import pxToRem from "../../../utils/pxToRem";
-import ArrowIcon from "../../svgs/ArrowIcon";
 
 const DesktopProjectCardWrapper = styled.div`
   width: 100%;
   grid-column: 1 / 9;
-  padding-top: 60%;
+  height: calc(60vh - 8px);
   position: relative;
 
-  &:hover {
-    .project-card__information {
-      opacity: 1;
-    }
+  @media ${(props) => props.theme.mediaBreakpoints.tabletMedium} {
+    height: calc(50vh - 8px);
+  }
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    grid-column: 1 / -1;
   }
 `;
 
@@ -33,6 +34,12 @@ const MediaWrapper = styled.div`
   width: auto;
   height: 60%;
   position: relative;
+  border-radius: 4px;
+  overflow: hidden;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    height: 50%;
+  }
 
   mux-player {
     width: 100%;
@@ -45,49 +52,19 @@ const InformationWrapper = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  padding: ${pxToRem(8)} ${pxToRem(8)} ${pxToRem(8)} ${pxToRem(16)};
+  padding: ${pxToRem(8)} ${pxToRem(12)};
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   z-index: 2;
   width: 100%;
-  opacity: 0;
+  opacity: 1;
 
   transition: all var(--transition-speed-default) var(--transition-ease);
 `;
 
 const Title = styled.p`
   color: var(--colour-grey);
-`;
-
-const Button = styled.a`
-  background: rgba(255, 255, 255, 0.1);
-  color: var(--colour-white);
-  padding: ${pxToRem(4)} ${pxToRem(8)};
-  display: flex;
-  align-items: center;
-  text-decoration: none;
-  border-radius: 2px;
-  gap: ${pxToRem(6)};
-
-  transition: all var(--transition-speed-default) var(--transition-ease);
-
-  &:hover {
-    background: rgba(255, 255, 255, 1);
-    color: var(--colour-black);
-
-    svg {
-      path {
-        stroke: var(--colour-black);
-      }
-    }
-  }
-
-  svg {
-    path {
-      transition: all var(--transition-speed-default) var(--transition-ease);
-    }
-  }
 `;
 
 const NotchWrapper = styled.div`
@@ -106,18 +83,12 @@ const DesktopProjectCard = (props: Props) => {
   const { data } = props;
 
   return (
-    <DesktopProjectCardWrapper>
+    <DesktopProjectCardWrapper className="project-card">
       <Inner>
         <InformationWrapper className="project-card__information">
           <Title>
             <span>{data?.title || ""}</span> — {data?.description || ""}
           </Title>
-          {data?.siteUrl && (
-            <Button href={data?.siteUrl || ""}>
-              View site
-              <ArrowIcon />
-            </Button>
-          )}
         </InformationWrapper>
         <MediaWrapper>
           <NotchWrapper>
@@ -134,6 +105,7 @@ const DesktopProjectCard = (props: Props) => {
               preload="auto"
               muted
               playsInline={true}
+              style={{ aspectRatio: "1300/770" }}
             />
           )}
         </MediaWrapper>

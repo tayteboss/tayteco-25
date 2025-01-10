@@ -10,6 +10,10 @@ const MobileProjectCardWrapper = styled.div`
   grid-column: 9 / -1;
   position: relative;
   height: 100%;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    display: none;
+  }
 `;
 
 const Inner = styled.div`
@@ -27,6 +31,8 @@ const MediaWrapper = styled.div`
   width: auto;
   height: 60%;
   position: relative;
+  border-radius: 4px;
+  overflow: hidden;
 
   mux-player {
     width: 100%;
@@ -48,6 +54,55 @@ const NotchWrapper = styled.div`
   }
 `;
 
+const InformationWrapper = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  padding: ${pxToRem(8)};
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  z-index: 2;
+  width: 100%;
+  opacity: 1;
+
+  transition: all var(--transition-speed-default) var(--transition-ease);
+`;
+
+const Title = styled.p`
+  color: var(--colour-grey);
+`;
+
+const Button = styled.a`
+  background: rgba(255, 255, 255, 0.1);
+  color: var(--colour-white);
+  padding: ${pxToRem(4)} ${pxToRem(8)};
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  border-radius: 2px;
+  gap: ${pxToRem(6)};
+
+  transition: all var(--transition-speed-default) var(--transition-ease);
+
+  &:hover {
+    background: rgba(255, 255, 255, 1);
+    color: var(--colour-black);
+
+    svg {
+      path {
+        stroke: var(--colour-black);
+      }
+    }
+  }
+
+  svg {
+    path {
+      transition: all var(--transition-speed-default) var(--transition-ease);
+    }
+  }
+`;
+
 type Props = {
   data: ProjectType;
 };
@@ -56,8 +111,16 @@ const MobileProjectCard = (props: Props) => {
   const { data } = props;
 
   return (
-    <MobileProjectCardWrapper>
+    <MobileProjectCardWrapper className="project-card">
       <Inner>
+        <InformationWrapper className="project-card__information">
+          {data?.siteUrl && (
+            <Button href={data?.siteUrl || ""}>
+              Visit site
+              <ArrowIcon />
+            </Button>
+          )}
+        </InformationWrapper>
         <MediaWrapper>
           <NotchWrapper>
             <NotchIcon />

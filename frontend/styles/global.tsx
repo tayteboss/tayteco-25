@@ -38,6 +38,20 @@ export const GlobalStyles = createGlobalStyle`
 		color: white;
 	}
 
+	.project-card {
+		opacity: 0;
+		filter: blur(2px);
+
+		transition: all var(--transition-speed-extra-slow) var(--transition-ease);
+	}
+
+	.fade-in {
+		.project-card {
+			opacity: 1;
+			filter: blur(0px);
+		}
+	}
+
 	html {
 		background: var(--colour-white);
 		font-size: 16px;
