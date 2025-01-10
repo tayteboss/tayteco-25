@@ -115,7 +115,7 @@ const MobileProjectCard = (props: Props) => {
       <Inner>
         <InformationWrapper className="project-card__information">
           {data?.siteUrl && (
-            <Button href={data?.siteUrl || ""}>
+            <Button href={data?.siteUrl || ""} target="_blank">
               Visit site
               <ArrowIcon />
             </Button>
@@ -136,6 +136,7 @@ const MobileProjectCard = (props: Props) => {
               preload="auto"
               muted
               playsInline={true}
+              style={{ aspectRatio: "390/840" }}
             />
           )}
         </MediaWrapper>

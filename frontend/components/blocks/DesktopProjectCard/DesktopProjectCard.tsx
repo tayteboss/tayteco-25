@@ -28,6 +28,11 @@ const Inner = styled.div`
   background: var(--colour-black);
   border-top-left-radius: 4px;
   border-bottom-left-radius: 4px;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    border-bottom-left-radius: 0;
+    border-top-right-radius: 4px;
+  }
 `;
 
 const MediaWrapper = styled.div`
@@ -73,6 +78,14 @@ const NotchWrapper = styled.div`
   left: 50%;
   transform: translateX(-50%);
   z-index: 1;
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    top: -3px;
+
+    svg {
+      width: 70px;
+    }
+  }
 `;
 
 type Props = {

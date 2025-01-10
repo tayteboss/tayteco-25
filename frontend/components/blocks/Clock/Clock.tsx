@@ -219,7 +219,7 @@ const Clock: React.FC<ClockProps> = () => {
     ["translateY(0px)", "translateY(400px)"]
   );
 
-  const isMobile = useViewportWidth();
+  const isMobile = useViewportWidth() === "mobile";
 
   return (
     <ClockWrapper style={{ filter: blur, transform: transform }}>
