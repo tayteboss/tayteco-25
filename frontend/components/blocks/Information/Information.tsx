@@ -160,9 +160,11 @@ const Information = (props: Props) => {
                   <Link href="mailto:speakto@tayte.co">speakto@tayte.co</Link>
                 </Col>
                 <Col>
-                  <Text>— Info</Text>
                   {siteSettings?.info && (
-                    <Text $useMarginBottom={true}>{siteSettings?.info}</Text>
+                    <>
+                      <Text>— Info</Text>
+                      <Text $useMarginBottom={true}>{siteSettings?.info}</Text>
+                    </>
                   )}
                   <Text>— Services</Text>
                   {siteSettings?.services && (

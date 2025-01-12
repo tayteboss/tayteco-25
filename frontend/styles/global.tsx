@@ -52,6 +52,18 @@ export const GlobalStyles = createGlobalStyle`
 		}
 	}
 
+	.text-align-right {
+		text-align: right;
+	}
+
+	.text-align-center {
+		text-align: center;
+	}
+
+	.text-align-left {
+		text-align: left;
+	}
+
 	html {
 		background: var(--colour-white);
 		font-size: 16px;

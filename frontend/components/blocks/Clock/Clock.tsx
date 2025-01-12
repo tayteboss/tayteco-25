@@ -48,7 +48,7 @@ const HandContainer = styled.div<HandContainerProps>`
         This helps the second hand animate plus hour/minute fading in
     */
   transition:
-    transform ${(props) => props.transitionDuration || "0.3s"} ease-in-out,
+    transform ${(props) => props.transitionDuration || "0.3s"} ease,
     opacity 0.6s ease-in-out;
   color: ${(props) =>
     props.$isSecondHand ? "var(--colour-blue)" : "var(--colour-black)"};
@@ -63,6 +63,15 @@ const HandContainer = styled.div<HandContainerProps>`
   opacity: ${(props) => (props.$show ? 1 : 0)};
 `;
 
+const LabelWrapper = styled.div<{ $transformValue?: string; flip?: boolean }>`
+  transform: ${(props) => props.$transformValue || "none"};
+  transform-origin: center center;
+
+  @media ${(props) => props.theme.mediaBreakpoints.mobile} {
+    font-size: 10px;
+  }
+`;
+
 interface LabelProps {
   rotation: number; // 0°..∞ for second hand, 0°..360 for hour/min
   label: string;
@@ -74,6 +83,8 @@ const HandLabel: React.FC<LabelProps> = ({ rotation, label }) => {
   const flip = flipAngle > 180;
   const transformValue = flip ? "rotate(180deg)" : "none";
 
+  useEffect(() => {}, [flip]);
+
   let link: string | undefined;
   if (label === "@tayte.co") {
     link = "https://www.instagram.com/tayte.co/";
@@ -81,22 +92,17 @@ const HandLabel: React.FC<LabelProps> = ({ rotation, label }) => {
     link = "mailto:speakto@tayte.co";
   }
 
-  const LabelWrapper = styled.div`
-    transform: ${transformValue};
-    transform-origin: center center;
-    text-align: ${flip ? "right" : "left"};
-
-    @media ${(props) => props.theme.mediaBreakpoints.mobile} {
-      font-size: 10px;
-    }
-  `;
-
   const content = link ? (
     <a
       href={link}
       target="_blank"
       rel="noopener noreferrer"
-      style={{ color: "inherit", textDecoration: "none" }}
+      style={{
+        color: "inherit",
+        textDecoration: "none",
+        textAlign: flip ? "right" : "left",
+        display: "inline-block",
+      }}
       className="clock-link"
     >
       {label}
@@ -105,7 +111,15 @@ const HandLabel: React.FC<LabelProps> = ({ rotation, label }) => {
     label
   );
 
-  return <LabelWrapper>{content}</LabelWrapper>;
+  return (
+    <LabelWrapper
+      $transformValue={transformValue}
+      $flip={flip}
+      className={flip ? "text-align-right" : "text-align-left"}
+    >
+      {content}
+    </LabelWrapper>
+  );
 };
 const SecondHandLabel: React.FC<LabelProps> = ({ rotation, label }) => {
   const LabelWrapper = styled.div`
@@ -182,6 +196,8 @@ const Clock: React.FC<ClockProps> = () => {
       const londonString = new Date().toLocaleString("en-GB", {
         timeZone: "Europe/London",
       });
+      console.log("Clock londonString", londonString);
+
       setTime(new Date(londonString));
     }, 1000);
 

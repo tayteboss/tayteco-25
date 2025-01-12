@@ -46,9 +46,12 @@ const FooterClock: React.FC<FooterClockProps> = ({
 
   useEffect(() => {
     const interval = setInterval(() => {
-      // Convert local time to the specified time zone
-      const t = new Date(new Date().toLocaleString("en-US", { timeZone }));
-      setCurrentTime(t);
+      const londonString = new Date().toLocaleString("en-GB", {
+        timeZone: "Europe/London",
+      });
+      console.log("Footer londonString", londonString);
+
+      setCurrentTime(new Date(londonString));
 
       // Increase total seconds by 1 each time
       setTotalSeconds((prev) => prev + 1);
@@ -67,7 +70,7 @@ const FooterClock: React.FC<FooterClockProps> = ({
   const hourDegrees = (hours % 12) * 30 + (minutes / 60) * 30;
 
   // secondHandDegrees: continuously increasing so it never “snaps” back
-  const secondHandDegrees = totalSeconds * 6;
+  const secondHandDegrees = currentTime.getSeconds() * 6;
   // If you do want to limit the rotation to 360, remove the transition or handle the jump at mod 360.
 
   return (
