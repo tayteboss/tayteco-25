@@ -54,6 +54,26 @@ const Col = styled.div`
   }
 `;
 
+const ContactCol = styled.div`
+  grid-column: span 4;
+  margin-bottom: ${pxToRem(16)};
+
+  @media ${(props) => props.theme.mediaBreakpoints.tabletPortrait} {
+    grid-column: 1 / -1;
+  }
+
+  a {
+    display: block;
+    text-decoration: none;
+
+    transition: all var(--transition-speed-default) var(--transition-ease);
+
+    &:hover {
+      opacity: 0.5;
+    }
+  }
+`;
+
 const ClockCol = styled.div`
   grid-column: span 4;
   display: flex;
@@ -151,13 +171,13 @@ const Information = (props: Props) => {
                   </Text>
                 </Col>
                 <Col>
-                  <Link
+                  {/* <Link
                     href="https://www.instagram.com/tayte.co/"
                     target="_blank"
                   >
                     @tayte.co
                   </Link>
-                  <Link href="mailto:speakto@tayte.co">speakto@tayte.co</Link>
+                  <Link href="mailto:speakto@tayte.co">speakto@tayte.co</Link> */}
                 </Col>
                 <Col>
                   {siteSettings?.info && (
@@ -166,6 +186,21 @@ const Information = (props: Props) => {
                       <Text $useMarginBottom={true}>{siteSettings?.info}</Text>
                     </>
                   )}
+                  <ContactCol>
+                    <Text>— Contact</Text>
+                    <Link
+                      href="https://www.instagram.com/tayte.co/"
+                      target="_blank"
+                    >
+                      @tayte.co
+                    </Link>
+                    <Link
+                      href="mailto:speakto@tayte.co"
+                      $useMarginBottom={true}
+                    >
+                      speakto@tayte.co
+                    </Link>
+                  </ContactCol>
                   <Text>— Services</Text>
                   {siteSettings?.services && (
                     <TextDiv
