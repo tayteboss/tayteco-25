@@ -46,19 +46,24 @@ const FooterClock: React.FC<FooterClockProps> = ({
 
   useEffect(() => {
     const interval = setInterval(() => {
+      // Grab fresh "now" each tick
       const londonString = new Date().toLocaleString("en-GB", {
         timeZone: "Europe/London",
+        hour12: false,
       });
-      console.log("Footer londonString", londonString);
 
-      setCurrentTime(new Date(londonString));
+      const [datePart, timePart] = londonString.split(", ");
+      const [day, month, year] = datePart.split("/");
+      const correctedString = `${month}/${day}/${year} ${timePart}`;
+      const londonDate = new Date(correctedString);
 
-      // Increase total seconds by 1 each time
-      setTotalSeconds((prev) => prev + 1);
+      setCurrentTime(londonDate);
     }, 1000);
 
+    // Cleanup
     return () => clearInterval(interval);
-  }, [timeZone]);
+    // Notice we do NOT put [time] in the dependency array
+  }, []);
 
   // Hours and minutes can remain on typical 12-hour cycles
   const seconds = currentTime.getSeconds();

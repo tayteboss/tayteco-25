@@ -181,30 +181,35 @@ const HandWithLabel: React.FC<HandWithLabelProps> = ({
 };
 
 const Clock: React.FC<ClockProps> = () => {
-  const [time, setTime] = useState<Date>(new Date());
-
-  const [secondLoopCount, setSecondLoopCount] = useState<number>(0);
   const prevSecondRef = useRef<number>(0);
 
-  // NEW: Track intro animation states
+  const [time, setTime] = useState<Date>(new Date());
+  const [secondLoopCount, setSecondLoopCount] = useState<number>(0);
   const [introSecondHand, setIntroSecondHand] = useState<boolean>(true);
   const [showHourMinute, setShowHourMinute] = useState<boolean>(false);
   const [secondSpeedToSlow, setSecondSpeedToSlow] = useState(true);
 
   useEffect(() => {
     const interval = setInterval(() => {
+      // Grab fresh "now" each tick
       const londonString = new Date().toLocaleString("en-GB", {
         timeZone: "Europe/London",
+        hour12: false,
       });
-      console.log("Clock londonString", londonString);
 
-      setTime(new Date(londonString));
+      const [datePart, timePart] = londonString.split(", ");
+      const [day, month, year] = datePart.split("/");
+      const correctedString = `${month}/${day}/${year} ${timePart}`;
+      const londonDate = new Date(correctedString);
+
+      setTime(londonDate);
     }, 1000);
 
+    // Cleanup
     return () => clearInterval(interval);
+    // Notice we do NOT put [time] in the dependency array
   }, []);
 
-  // Setup the “time check” for hour/min/sec
   const hours = time.getHours();
   const minutes = time.getMinutes();
   const seconds = time.getSeconds();
