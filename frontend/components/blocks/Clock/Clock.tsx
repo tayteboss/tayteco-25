@@ -63,8 +63,7 @@ const HandContainer = styled.div<HandContainerProps>`
   opacity: ${(props) => (props.$show ? 1 : 0)};
 `;
 
-const LabelWrapper = styled.div<{ $transformValue?: string; flip?: boolean }>`
-  transform: ${(props) => props.$transformValue || "none"};
+const LabelWrapper = styled.div`
   transform-origin: center center;
 
   @media ${(props) => props.theme.mediaBreakpoints.mobile} {
@@ -81,7 +80,6 @@ interface LabelProps {
 const HandLabel: React.FC<LabelProps> = ({ rotation, label }) => {
   const flipAngle = rotation % 360;
   const flip = flipAngle > 180;
-  const transformValue = flip ? "rotate(180deg)" : "none";
 
   useEffect(() => {}, [flip]);
 
@@ -112,11 +110,7 @@ const HandLabel: React.FC<LabelProps> = ({ rotation, label }) => {
   );
 
   return (
-    <LabelWrapper
-      $transformValue={transformValue}
-      $flip={flip}
-      className={flip ? "text-align-right" : "text-align-left"}
-    >
+    <LabelWrapper className={flip ? "text-align-right" : "text-align-left"}>
       {content}
     </LabelWrapper>
   );

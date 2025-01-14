@@ -54,6 +54,7 @@ export const GlobalStyles = createGlobalStyle`
 
 	.text-align-right {
 		text-align: right;
+		transform: rotate(180deg);
 	}
 
 	.text-align-center {
