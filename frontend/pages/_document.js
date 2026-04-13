@@ -43,8 +43,8 @@ export default class CustomDocument extends Document {
 				<body>
 					<Main />
 					<NextScript />
-					<GoogleAnalytics gaId="G-DP3TM6BRKT" />
 				</body>
+				<GoogleAnalytics gaId="G-DP3TM6BRKT" />
 			</Html>
 		);
 	}
