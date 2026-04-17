@@ -2,6 +2,7 @@ import styled from "styled-components";
 import { ReactNode } from "react";
 import { ReactLenis, useLenis } from "@studio-freight/react-lenis";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { SpeedInsights } from "@vercel/speed-insights/next";
 
 const Main = styled.main``;
 
@@ -19,6 +20,7 @@ const Layout = (props: Props) => {
       <ReactLenis root>
         <Main>{children}</Main>
         <GoogleAnalytics gaId="G-DP3TM6BRKT" />
+        <SpeedInsights />
       </ReactLenis>
     </>
   );
